@@ -1,0 +1,7 @@
+ups\edu\ec\vista\Princiapl.class
+ups\edu\ec\modelo\Mensaje.class
+ups\edu\ec\on\GestionMensajeON.class
+ups\edu\ec\on\GestionMensajeRemoto.class
+ups\edu\ec\dao\DestinatarioDAO.class
+ups\edu\ec\modelo\Destinatario.class
+ups\edu\ec\dao\MensajeDAO.class
