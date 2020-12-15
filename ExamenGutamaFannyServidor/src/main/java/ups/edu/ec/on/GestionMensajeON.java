@@ -26,7 +26,7 @@ import ups.edu.ec.modelo.Mensaje;
  */
 
 @Stateless
-public class GestionMensajeON {
+public class GestionMensajeON implements GestionMensajeRemoto{
 
    @Inject
    private DestinatarioDAO destinatarioDAO;
@@ -84,15 +84,7 @@ public class GestionMensajeON {
        }
    }
    
-    public Mensaje buscarDestinatario(int id){
-        Destinatario d =null;
-       try {
-           
-       } catch (Exception ex) {
-           Logger.getLogger(GestionMensajeON.class.getName()).log(Level.SEVERE, null, ex);
-       }
-      return d;   
-    }
+ 
    
  
 }
