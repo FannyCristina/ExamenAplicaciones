@@ -24,65 +24,69 @@ import ups.edu.ec.modelo.Mensaje;
  * @author Fanny
  */
 @Stateless
-public class DestinatarioDAO  {
+public class DestinatarioDAO {
 
-    @PersistenceContext(name="ExamenGutamaFannyServidorPersistenceUnit")
+    @PersistenceContext(name = "ExamenGutamaFannyServidorPersistenceUnit")
     private EntityManager em;
 
     public DestinatarioDAO() {
 
     }
- public boolean insert(Destinatario des) throws Exception {
-        boolean bandera = true;
-    	try {
-            System.out.println("si creo que llega aca");
-            em.persist(des);
-            bandera=true;
-        } catch (Exception e) {
-        	bandera=false;
-            throw new Exception("Erro ingreso mensaje" + e.getMessage());   
-        }
-        return bandera;
-    }
-       
 
-    public void update(Destinatario des) throws Exception {
+    public void insert(Destinatario destinatario) throws Exception {
         try {
-            em.merge(des);
+            em.persist(destinatario);
         } catch (Exception e) {
-            throw new Exception("Erro actualizar Cliente " +e.getMessage());
+            throw new Exception("Erro ingreso telefono", e);
         }
     }
-    
 
- 
-   
+    public void delete(int id) throws Exception {
+        try {
+            em.remove(id);
+        } catch (Exception e) {
+            throw new Exception("Erro Eliminar telefono", e);
+        }
+    }
+
+    public void update(Destinatario destinatario) throws Exception {
+        try {
+            em.merge(destinatario);
+        } catch (Exception e) {
+            throw new Exception("Erro actualizar telefono", e);
+        }
+    }
+
+    public Destinatario read(int id) throws Exception {
+        try {
+            return em.find(Destinatario.class, id);
+        } catch (Exception e) {
+            throw new Exception("Erro leer telefono");
+        }
+    }
+
     public List<Destinatario> findAll() throws Exception {
 
         try {
-            Query q = em.createNamedQuery("Destinatario.findAll");
-            List<Destinatario> lista = q.getResultList();
-            return lista;
+            String jpql = "SELECT P FROM destinatario p ";
+            Query q = em.createQuery(jpql, Destinatario.class);
+            return q.getResultList();
         } catch (Exception e) {
-            throw new Exception("Erro listar destinatarios " +e.getMessage());
+            throw new Exception("Erro listar Telefono");
         }
 
     }
-    
-    public List<Destinatario> findAllCodigo(int codigo) throws Exception {
+
+    public List<Destinatario> findByPersona(int id) throws Exception {
 
         try {
-            Query q = em.createNamedQuery("Destinatario.findAllCodigo");
-            q.setParameter("codigo",  "%" + codigo + "%");
-            List<Destinatario> lista = q.getResultList();
-            return lista;
+            Query q = em.createNamedQuery("Destinatario.findByMensaje");
+            q.setParameter("id", id);
+            return q.getResultList();
         } catch (Exception e) {
-            throw new Exception("Erro listar Destinatario " +e.getMessage());
+            throw new Exception("Erro listar Telefono /n" + e.getMessage());
         }
 
     }
-    
-    
-   
-    
+
 }

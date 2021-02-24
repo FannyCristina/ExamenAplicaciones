@@ -6,7 +6,6 @@
 package ups.edu.ec.on;
 
 import java.util.List;
-import javax.ejb.Remote;
 import ups.edu.ec.modelo.Destinatario;
 import ups.edu.ec.modelo.Mensaje;
 
@@ -14,7 +13,6 @@ import ups.edu.ec.modelo.Mensaje;
  *
  * @author Fanny
  */
-@Remote
 public interface GestionMensajeRemoto {
 
     public boolean guardadoMensaje(Mensaje mensaje) throws Exception;

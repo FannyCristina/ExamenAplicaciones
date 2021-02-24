@@ -7,6 +7,8 @@ package ups.edu.ec.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -33,51 +35,97 @@ public class MensajeDAO {
         
     }
     
-    public boolean insert(Mensaje msj) throws Exception {
-        boolean bandera = true;
-    	try {
-            System.out.println("si creo que llega aca");
-            em.persist(msj);
-            bandera=true;
-        } catch (Exception e) {
-        	bandera=false;
-            throw new Exception("Erro ingreso mensaje" + e.getMessage());   
-        }
-        return bandera;
-    }
-    
-    public void update(Mensaje msj) throws Exception {
+   public void insert(Mensaje mensaje) throws Exception {
         try {
-            em.merge(msj);
+            System.out.println("si creo que llega aca");
+            em.persist(mensaje);
         } catch (Exception e) {
-            throw new Exception("Erro actualizar mensaje " +e.getMessage());
+            throw new Exception("Erro ingreso Persona " + e.getMessage());
+        }
+    }
+
+    public void delete(Mensaje mensaje) throws Exception {
+        try {
+            System.out.println("borrando");
+            em.remove(read(mensaje.getId()));
+        } catch (Exception e) {
+            throw new Exception("oErro Eliminar Persona " +e.getMessage());
+        }
+    }
+
+    public void deleteId(int id) throws Exception {
+        try {
+            System.out.println("borrando");
+            em.remove(read(id));
+        } catch (Exception e) {
+            throw new Exception("oErro Eliminar Persona " +e.getMessage());
         }
     }
     
-    public List<Destinatario> findAll() throws Exception {
+    public void update(Mensaje persona) throws Exception {
+        try {
+            em.merge(persona);
+        } catch (Exception e) {
+            throw new Exception("Erro actualizar Persona " +e.getMessage());
+        }
+    }
+
+    public Mensaje read(int id) throws Exception {
+        try {
+            return em.find(Mensaje.class, id);
+        } catch (Exception e) {
+            throw new Exception("Erro leer Persona " +e.getMessage());
+        }
+    }
+
+    public List<Mensaje> findAll() throws Exception {
 
         try {
-            Query q = em.createNamedQuery("Destinatario.findByContenido");
-            List<Destinatario> lista = q.getResultList();
+            Query q = em.createNamedQuery("Mensaje.findAll");
+            List<Mensaje> lista = q.getResultList();
             return lista;
         } catch (Exception e) {
-            throw new Exception("Erro listar destinatarios " +e.getMessage());
+            throw new Exception("Erro listar Persona " +e.getMessage());
+        }
+
+    }
+
+    public Mensaje findByCedula(int id) throws Exception {
+        try {
+            String jpql = "SELECT m FROM mensaje m "
+                    + "WHERE id = :id";
+            Query q = em.createQuery(jpql, Mensaje.class);
+            q.setParameter("id", id);
+
+            return (Mensaje) q.getSingleResult();
+        } catch (Exception e) {
+            throw new Exception("Erro buscar por  cedula");
+        }
+
+    }
+
+    public int maxId() throws Exception {
+        try {
+            String jpql = "SELECT m FROM mensaje m "
+                    + "WHERE id = :id";
+            Query q = em.createQuery(jpql, Mensaje.class);
+            return (int) q.getSingleResult();
+        } catch (Exception e) {
+            throw new Exception("Error MaxID", e.getCause());
         }
     }
     
-   
- 
-        public List<Mensaje> listaMensajes(int codigo) throws Exception {
-
+      public void removeDestinatario(Mensaje men) {
+ 	   Mensaje p;
         try {
-            Query q = em.createNamedQuery("Mensaje.findAllCodigo");
-            q.setParameter("codigo",  "%" + codigo + "%");
-            List<Mensaje> lis = q.getResultList();
-            return lis;
-        } catch (Exception e) {
-            throw new Exception("Erro listar Mensaje " +e.getMessage());
+            p = read(men.getId());
+            em.remove(p);
+ 	   System.out.println("Se fue  >>>>> ->>>>" +p.getId());
+        } catch (Exception ex) {
+            Logger.getLogger(MensajeDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+ 	   
+ 	   
     }
     
     

@@ -5,46 +5,19 @@
  */
 package ups.edu.ec.modelo;
 
-import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+
 
 /**
  *
  * @author Fanny
  */
-@Entity
-@Table(name = "destinatario", catalog = "mensaje", schema = "")
-@NamedQueries({
-    @NamedQuery(name = "Destinatario.findAll", query = "SELECT d FROM Destinatario d"),
-    @NamedQuery(name = "Destinatario.findById", query = "SELECT d FROM Destinatario d WHERE d.id = :id"),
-    @NamedQuery(name = "Destinatario.findByMensaje", query = "SELECT t FROM Destinatario t WHERE t.mensajeId.id = :id"),
-    @NamedQuery(name = "Destinatario.findByNombre", query = "SELECT d FROM Destinatario d WHERE d.nombre = :nombre")})
 
+public class Destinatario {
 
-public class Destinatario implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id", nullable = false)
+   
+ 
     private Integer id;
-    @Basic(optional = false)
-    @Column(name = "nombre", nullable = false, length = 20)
     private String nombre;
-    @JoinColumn(name = "mensaje_id", referencedColumnName = "id", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Mensaje mensajeId;
 
     public Destinatario() {

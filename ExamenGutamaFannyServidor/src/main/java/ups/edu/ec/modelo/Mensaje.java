@@ -7,6 +7,7 @@ package ups.edu.ec.modelo;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -42,7 +43,7 @@ public class Mensaje implements Serializable {
     @Column(name = "contenido", nullable = false, length = 120)
     private String contenido;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "mensajeId", fetch = FetchType.EAGER)
-    private Collection<Destinatario> destinatarioCollection;
+    private List<Destinatario> destinatarioLista;
 
     public Mensaje() {
     }
@@ -72,13 +73,15 @@ public class Mensaje implements Serializable {
         this.contenido = contenido;
     }
 
-    public Collection<Destinatario> getDestinatarioCollection() {
-        return destinatarioCollection;
+    public List<Destinatario> getDestinatarioLista() {
+        return destinatarioLista;
     }
 
-    public void setDestinatarioCollection(Collection<Destinatario> destinatarioCollection) {
-        this.destinatarioCollection = destinatarioCollection;
+    public void setDestinatarioLista(List<Destinatario> destinatarioLista) {
+        this.destinatarioLista = destinatarioLista;
     }
+
+ 
 
     @Override
     public int hashCode() {
